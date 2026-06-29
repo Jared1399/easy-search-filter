@@ -88,12 +88,15 @@ class Ajax {
         $query = new \WP_Query($query_args);
         $group = Filter_Group::instance()->get_group($group_id);
 
-        $pag_base = esc_url_raw($_POST['esp_pag_base'] ?? '');
+        $pag_url = sanitize_text_field($_POST['esp_pag_url'] ?? '');
+        if (!$pag_url) {
+            $pag_url = add_query_arg('esp_paged', '%#%');
+        }
         $html = Template::instance()->render_string('search-results.php', [
             'group'     => $group,
             'query'     => $query,
             'args'      => $query_args,
-            'pag_base'  => $pag_base,
+            'pag_url'   => $pag_url,
         ]);
 
         wp_send_json_success([

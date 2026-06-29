@@ -326,23 +326,23 @@
         var groupId = form.find('input[name="esp_group_id"]').val();
         if (!groupId) return;
 
-        // Build pagination base from active filters in formData
-        var pagParams = [];
+        // Build pagination full URL from active filters + page path
+        var pagParts = [];
         for (var i = 0; i < formData.length; i++) {
             var item = formData[i];
-            if (item.name !== 'esp_paged' && item.name !== 'action' && item.name !== 'esp_nonce' && item.name !== 'esp_group_id' && item.name !== 'esp_orderby' && item.name !== 'esp_pag_base') {
-                if (item.value) pagParams.push(encodeURIComponent(item.name) + '=' + encodeURIComponent(item.value));
+            if (item.name !== 'esp_paged' && item.name !== 'action' && item.name !== 'esp_nonce' && item.name !== 'esp_group_id' && item.name !== 'esp_orderby' && item.name !== 'esp_pag_url') {
+                if (item.value) pagParts.push(encodeURIComponent(item.name) + '=' + encodeURIComponent(item.value));
             }
         }
-        var pagBase = window.location.origin + window.location.pathname;
-        pagBase += (pagParams.length ? '?' + pagParams.join('&') + '&' : '?') + 'esp_paged=%#%';
+        var pagUrl = window.location.origin + window.location.pathname;
+        pagUrl += (pagParts.length ? '?' + pagParts.join('&') + '&' : '?') + 'esp_paged=%#%';
 
         // Append internal params
         var nonceField = form.find('input[name="esp_nonce"]');
         if (nonceField.length) formData.push({ name: 'esp_nonce', value: nonceField.val() });
         formData.push({ name: 'action', value: 'esp_search' });
         formData.push({ name: 'esp_group_id', value: groupId });
-        formData.push({ name: 'esp_pag_base', value: pagBase });
+        formData.push({ name: 'esp_pag_url', value: pagUrl });
 
         // Sort preservation
         var sortSelect = $('#esp-sort-select');
