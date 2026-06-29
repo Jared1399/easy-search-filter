@@ -67,12 +67,69 @@
     function maybeRestoreCascading() {
         $('.esp-taxonomy-field').each(function() {
             var field = $(this);
+            var taxonomy = field.data('taxonomy');
             var hiddenInput = field.find('.esp-tax-input');
             var currentValue = hiddenInput.val();
-            if (currentValue) {
-                restoreCascadeLevel(field.data('taxonomy'), currentValue, field.find('.esp-cascading-container'), 0, hiddenInput);
+            if (currentValue && taxonomy) {
+                $.getJSON(espData.ajaxUrl, {
+                    action: 'esp_get_term_ancestors',
+                    term_slug: currentValue,
+                    taxonomy: taxonomy
+                }, function(response) {
+                    if (response.success && response.data.ancestors && response.data.ancestors.length > 0) {
+                        restoreAncestorChain(taxonomy, response.data.ancestors, field.find('.esp-cascading-container'), 0, hiddenInput);
+                    }
+                });
             }
         });
+    }
+
+    function restoreAncestorChain(taxonomy, ancestors, container, index, hiddenInput) {
+        if (index >= ancestors.length) return;
+        var term = ancestors[index];
+        var level = index;
+
+        var select = container.find('select.esp-cascade-level[data-level="' + level + '"]');
+        if (!select.length) {
+            // Need to create this level — parent select should already exist
+            var parentSelect = container.find('select.esp-cascade-level[data-level="' + (level - 1) + '"]');
+            if (!parentSelect.length) return;
+            var parentId = parentSelect.find('option:selected').data('term-id');
+            if (!parentId) return;
+            var childContainer = $('<div class="esp-cascade-children"></div>');
+            parentSelect.after(childContainer);
+            loadChildTerms(taxonomy, parentId, level, childContainer, hiddenInput);
+            var checkInterval = setInterval(function() {
+                var newSelect = container.find('select.esp-cascade-level[data-level="' + level + '"]');
+                if (newSelect.length) {
+                    clearInterval(checkInterval);
+                    selectTermAndRecurse(newSelect, term, ancestors, taxonomy, container, index, hiddenInput);
+                }
+            }, 100);
+            return;
+        }
+        selectTermAndRecurse(select, term, ancestors, taxonomy, container, index, hiddenInput);
+    }
+
+    function selectTermAndRecurse(select, term, ancestors, taxonomy, container, index, hiddenInput) {
+        select.val(term.slug);
+        hiddenInput.val(term.slug);
+        if (index + 1 < ancestors.length) {
+            var parentId = term.term_id;
+            var childContainer = select.siblings('.esp-cascade-children');
+            if (!childContainer.length) {
+                childContainer = $('<div class="esp-cascade-children"></div>');
+                select.after(childContainer);
+            }
+            loadChildTerms(taxonomy, parentId, index + 1, childContainer, hiddenInput);
+            var checkInterval = setInterval(function() {
+                var nextSelect = container.find('select.esp-cascade-level[data-level="' + (index + 1) + '"]');
+                if (nextSelect.length) {
+                    clearInterval(checkInterval);
+                    restoreAncestorChain(taxonomy, ancestors, container, index + 1, hiddenInput);
+                }
+            }, 100);
+        }
     }
 
     function restoreCascadeLevel(taxonomy, targetSlug, container, level, hiddenInput) {

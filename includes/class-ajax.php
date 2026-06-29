@@ -16,6 +16,8 @@ class Ajax {
     private function __construct() {
         add_action('wp_ajax_esp_get_child_terms', [$this, 'get_child_terms']);
         add_action('wp_ajax_nopriv_esp_get_child_terms', [$this, 'get_child_terms']);
+        add_action('wp_ajax_esp_get_term_ancestors', [$this, 'get_term_ancestors']);
+        add_action('wp_ajax_nopriv_esp_get_term_ancestors', [$this, 'get_term_ancestors']);
 
         if (esf_fs()->can_use_premium_code__premium_only()) {
             add_action('wp_ajax_esp_search', [$this, 'search_results']);
@@ -65,6 +67,39 @@ class Ajax {
         }
 
         wp_send_json_success($result);
+    }
+
+    public function get_term_ancestors() {
+        $term_slug = sanitize_text_field($_GET['term_slug'] ?? '');
+        $taxonomy = sanitize_text_field($_GET['taxonomy'] ?? '');
+
+        if (!$term_slug || !$taxonomy) {
+            wp_send_json_error(['message' => __('Missing parameters.', 'easy-search-filter')]);
+        }
+
+        $term = get_term_by('slug', $term_slug, $taxonomy);
+        if (!$term) {
+            wp_send_json_success(['ancestors' => []]);
+            return;
+        }
+
+        $ancestors = get_ancestors($term->term_id, $taxonomy);
+        rsort($ancestors);
+        $ancestors[] = $term->term_id;
+
+        $chain = [];
+        foreach ($ancestors as $aid) {
+            $t = get_term($aid, $taxonomy);
+            if ($t) {
+                $chain[] = [
+                    'slug' => $t->slug,
+                    'term_id' => $t->term_id,
+                    'name' => $t->name,
+                ];
+            }
+        }
+
+        wp_send_json_success(['ancestors' => $chain]);
     }
 
     public function search_results() {
