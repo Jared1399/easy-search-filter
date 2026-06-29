@@ -331,7 +331,7 @@
         if (nonceField.length) formData.push({ name: 'esp_nonce', value: nonceField.val() });
     formData.push({ name: 'action', value: 'esp_search' });
     formData.push({ name: 'esp_group_id', value: groupId });
-    formData.push({ name: 'esp_base_url', value: window.location.origin + window.location.pathname });
+    formData.push({ name: 'esp_pag_base', value: window.location.href.replace(/esp_paged=\d+&?/g, '').replace(/[?&]$/, '') + (window.location.search ? '&' : '?') + 'esp_paged=%#%' });
 
         // Sort preservation
         var sortSelect = $('#esp-sort-select');

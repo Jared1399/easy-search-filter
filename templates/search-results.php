@@ -90,11 +90,9 @@ $sort_labels = [
             <div class="esp-pagination">
                 <?php
                 $current = absint($args['paged'] ?? 1);
-                $pag_base = !empty($base_url)
-                    ? add_query_arg('esp_paged', '%#%', $base_url)
-                    : add_query_arg('esp_paged', '%#%');
+                $pag_url = !empty($pag_base) ? $pag_base : add_query_arg('esp_paged', '%#%');
                 echo paginate_links([
-                    'base'      => $pag_base,
+                    'base'      => $pag_url,
                     'format'    => '',
                     'current'   => $current,
                     'total'     => $query->max_num_pages,
