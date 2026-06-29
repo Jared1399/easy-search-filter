@@ -32,6 +32,7 @@ class Query_Builder {
         $meta_query = ['relation' => 'AND'];
         $tax_query = ['relation' => 'AND'];
 
+        $this->apply_search($group, $params, $args);
         $this->apply_taxonomy_filters($group, $params, $tax_query);
         $this->apply_meta_filters($group, $params, $meta_query);
 
@@ -82,6 +83,12 @@ class Query_Builder {
                     $args['order'] = $dir;
                 }
             }
+        }
+    }
+
+    private function apply_search($group, $params, &$args) {
+        if (!empty($group->display['enable_search']) && !empty($params['esp_search'])) {
+            $args['s'] = sanitize_text_field($params['esp_search']);
         }
     }
 

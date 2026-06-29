@@ -201,9 +201,11 @@ class Indexer {
         global $wpdb;
         $table = self::get_table_name();
 
+        $search_term = !empty($active_filters['search']) ? $active_filters['search'] : '';
+        unset($active_filters['search']);
+
         $conditions = [];
         $params = [$group_id];
-        $param_placeholders = [];
 
         foreach ($active_filters as $type => $filters) {
             foreach ($filters as $name => $value) {
@@ -217,23 +219,38 @@ class Indexer {
             }
         }
 
+        $all_ids = [];
+
         if (empty($conditions)) {
             $all_ids = $wpdb->get_col($wpdb->prepare(
                 "SELECT DISTINCT post_id FROM $table WHERE filter_group_id = %d",
                 $group_id
             ));
-            return array_map('intval', $all_ids);
+        } else {
+            $placeholders = implode(' OR ', $conditions);
+            $having = "HAVING COUNT(*) = " . count($conditions);
+            $all_ids = $wpdb->get_col($wpdb->prepare(
+                "SELECT post_id FROM $table
+                 WHERE filter_group_id = %d AND ($placeholders)
+                 GROUP BY post_id $having",
+                $params
+            ));
         }
 
-        $placeholders = implode(' OR ', $conditions);
-        $having = "HAVING COUNT(*) = " . count($conditions);
+        $all_ids = array_map('intval', $all_ids);
 
-        $sql = "SELECT post_id FROM $table
-                WHERE filter_group_id = %d AND ($placeholders)
-                GROUP BY post_id $having";
+        if (!empty($search_term)) {
+            $like = '%' . $wpdb->esc_like($search_term) . '%';
+            $search_ids = $wpdb->get_col($wpdb->prepare(
+                "SELECT ID FROM {$wpdb->posts}
+                 WHERE ID IN (" . (!empty($all_ids) ? implode(',', $all_ids) : '0') . ")
+                   AND (post_title LIKE %s OR post_content LIKE %s OR post_excerpt LIKE %s)",
+                $like, $like, $like
+            ));
+            $all_ids = array_map('intval', $search_ids);
+        }
 
-        $ids = $wpdb->get_col($wpdb->prepare($sql, $params));
-        return array_map('intval', $ids);
+        return $all_ids;
     }
 
     public function on_save_post($post_id, $post, $update) {

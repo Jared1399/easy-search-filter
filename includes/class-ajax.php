@@ -134,6 +134,11 @@ class Ajax {
             }
         }
 
+        $search_val = sanitize_text_field($_POST['esp_search'] ?? '');
+        if ($search_val) {
+            $active_filters['search'] = $search_val;
+        }
+
         $indexer = \EasySearchFilter\Indexer::instance();
         $counts = $indexer->get_group_counts($group_id, $active_filters);
         $total = $indexer->get_total_count($group_id, $active_filters);

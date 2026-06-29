@@ -394,6 +394,23 @@
         });
     }
 
+    // --- Search ---
+    function initSearch() {
+        var searchTimeout = null;
+        $(document).on('input', '.esp-search-input', function() {
+            var formWrap = $('.esp-search-form');
+            var form = formWrap.find('.esp-form');
+            if (searchTimeout) clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(function() {
+                if (formWrap.data('esp-ajax')) {
+                    var formData = form.serializeArray();
+                    submitAjaxSearch(formData, form);
+                }
+                triggerIndexerUpdate();
+            }, 400);
+        });
+    }
+
     // --- Meta field triggers ---
     function initMetaFieldTriggers() {
         $(document).on('change', '.esp-meta-field select, .esp-meta-field input[type="checkbox"]', function() {
@@ -411,6 +428,7 @@
         initSort();
         initMetaFieldTriggers();
         initActiveTagsAjax();
+        initSearch();
 
         if (espData.isPremium) {
             initAjaxSearch();

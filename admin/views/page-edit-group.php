@@ -241,6 +241,26 @@
                     </tr>
                 </table>
 
+                <h3 style="margin-top: 24px; margin-bottom: 8px;"><?php esc_html_e('Text Search', 'easy-search-filter'); ?></h3>
+                <p style="color: #646970; margin-top: 0;"><?php esc_html_e('Add a text search input to filter results by keyword.', 'easy-search-filter'); ?></p>
+                <table class="form-table esp-form-table">
+                    <tr>
+                        <th><label for="esp-enable-search"><?php esc_html_e('Enable Search', 'easy-search-filter'); ?></label></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" id="esp-enable-search" name="enable_search" value="1" <?php checked(!empty($display['enable_search'])); ?>>
+                                <?php esc_html_e('Show a text search field in the filter form', 'easy-search-filter'); ?>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="esp-search-placeholder"><?php esc_html_e('Placeholder Text', 'easy-search-filter'); ?></label></th>
+                        <td>
+                            <input type="text" id="esp-search-placeholder" name="search_placeholder" value="<?php echo esc_attr($display['search_placeholder'] ?? 'Search...'); ?>" class="regular-text">
+                        </td>
+                    </tr>
+                </table>
+
                 <h3 style="margin-top: 24px; margin-bottom: 8px;"><?php esc_html_e('Sort Options (Pro)', 'easy-search-filter'); ?></h3>
                 <p style="color: #646970; margin-top: 0;"><?php esc_html_e('Select which sorting options appear in the results dropdown.', 'easy-search-filter'); ?></p>
                 <table class="form-table esp-form-table">

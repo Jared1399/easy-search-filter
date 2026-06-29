@@ -55,6 +55,15 @@ foreach ($group->meta_fields as $field_config) {
     }
 }
 
+// Search text tag
+$search_term = sanitize_text_field($_GET['esp_search'] ?? '');
+if ($search_term !== '') {
+    $tags[] = [
+        'label' => sprintf(__('Search: %s', 'easy-search-filter'), $search_term),
+        'remove_url' => remove_query_arg(['esp_search', 'esp_paged']),
+    ];
+}
+
 if (empty($tags)) return;
 ?>
 <div class="esp-active-tags">
@@ -66,7 +75,7 @@ if (empty($tags)) return;
         </a>
     <?php endforeach; ?>
     <a href="<?php echo esc_url(remove_query_arg(array_merge(
-        ['esp_paged', 'esp_orderby'],
+        ['esp_paged', 'esp_orderby', 'esp_search'],
         array_map(function($t) { return 'esp_tax_' . $t['slug']; }, $group->taxonomies),
         array_reduce($group->meta_fields, function($c, $f) {
             $c[] = 'esp_meta_' . $f['key'];

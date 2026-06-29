@@ -249,6 +249,34 @@
     background: #fff;
 }
 
+.esp-search-field {
+    flex: 1 1 100%;
+    min-width: 100%;
+}
+
+.esp-search-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238c8f94' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") 12px 50% no-repeat;
+    background-size: 16px;
+    padding-left: 36px;
+    box-sizing: border-box;
+    transition: border-color 0.15s;
+}
+
+.esp-search-input:focus {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+    outline: none;
+}
+
+.esp-search-input::placeholder {
+    color: #9ca0a6;
+}
+
 /* --- Range Slider --- */
 .esp-range-field {
     flex: 1 1 100%;

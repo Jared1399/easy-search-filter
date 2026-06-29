@@ -417,8 +417,10 @@ class Admin {
                 'per_page'        => absint($post['display_per_page'] ?? 12),
                 'orderby'         => sanitize_text_field($post['display_orderby'] ?? 'date'),
                 'order'           => in_array($post['display_order'] ?? '', ['ASC', 'DESC']) ? $post['display_order'] : 'DESC',
-                'enable_indexer'  => !empty($post['enable_indexer']),
-                'hide_zero_count' => !empty($post['hide_zero_count']),
+                'enable_indexer'      => !empty($post['enable_indexer']),
+                'hide_zero_count'     => !empty($post['hide_zero_count']),
+                'enable_search'       => !empty($post['enable_search']),
+                'search_placeholder'  => sanitize_text_field($post['search_placeholder'] ?? 'Search...'),
                 'sort_options'    => !empty($post['sort_options']) ? array_map('sanitize_text_field', (array) $post['sort_options']) : ['date-desc', 'date-asc'],
             ],
         ];

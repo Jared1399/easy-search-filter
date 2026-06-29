@@ -132,11 +132,20 @@ $hide_zero = !empty($group->display['hide_zero_count']);
             </div>
         <?php endforeach; ?>
 
+        <?php if (!empty($group->display['enable_search'])): ?>
+            <div class="esp-field esp-search-field">
+                <span class="esp-field-label"><?php esc_html_e('Search', 'easy-search-filter'); ?></span>
+                <input type="search" name="esp_search" class="esp-search-input"
+                       value="<?php echo isset($_GET['esp_search']) ? esc_attr($_GET['esp_search']) : ''; ?>"
+                       placeholder="<?php echo esc_attr($group->display['search_placeholder'] ?? __('Search...', 'easy-search-filter')); ?>">
+            </div>
+        <?php endif; ?>
+
         <div class="esp-form-actions">
             <button type="submit" class="esp-search-btn">
                 <?php esc_html_e('Search', 'easy-search-filter'); ?>
             </button>
-            <a href="<?php echo esc_url(remove_query_arg(array_merge(['esp_group_id', 'esp_paged', 'esp_orderby'], array_map(function($t) { return 'esp_tax_' . $t['slug']; }, $group->taxonomies), array_reduce($group->meta_fields, function($carry, $f) {
+            <a href="<?php echo esc_url(remove_query_arg(array_merge(['esp_group_id', 'esp_paged', 'esp_orderby', 'esp_search'], array_map(function($t) { return 'esp_tax_' . $t['slug']; }, $group->taxonomies), array_reduce($group->meta_fields, function($carry, $f) {
                 $carry[] = 'esp_meta_' . $f['key'];
                 $carry[] = 'esp_meta_' . $f['key'] . '_min';
                 $carry[] = 'esp_meta_' . $f['key'] . '_max';
