@@ -15,8 +15,6 @@ $sort_labels = [
 ];
 ?>
 <div class="esp-results" data-group-id="<?php echo esc_attr($group->ID); ?>">
-    <?php \EasySearchFilter\Template::instance()->render('active-tags.php', ['group' => $group]); ?>
-
     <div class="esp-results-header">
         <div class="esp-results-count">
             <?php printf(
