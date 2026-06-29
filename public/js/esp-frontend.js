@@ -329,8 +329,9 @@
         // Append nonce + action
         var nonceField = form.find('input[name="esp_nonce"]');
         if (nonceField.length) formData.push({ name: 'esp_nonce', value: nonceField.val() });
-        formData.push({ name: 'action', value: 'esp_search' });
-        formData.push({ name: 'esp_group_id', value: groupId });
+    formData.push({ name: 'action', value: 'esp_search' });
+    formData.push({ name: 'esp_group_id', value: groupId });
+    formData.push({ name: 'esp_base_url', value: window.location.origin + window.location.pathname });
 
         // Sort preservation
         var sortSelect = $('#esp-sort-select');

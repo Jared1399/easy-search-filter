@@ -88,10 +88,12 @@ class Ajax {
         $query = new \WP_Query($query_args);
         $group = Filter_Group::instance()->get_group($group_id);
 
+        $base_url = esc_url_raw($_POST['esp_base_url'] ?? '');
         $html = Template::instance()->render_string('search-results.php', [
-            'group' => $group,
-            'query' => $query,
-            'args'  => $query_args,
+            'group'    => $group,
+            'query'    => $query,
+            'args'     => $query_args,
+            'base_url' => $base_url,
         ]);
 
         wp_send_json_success([
