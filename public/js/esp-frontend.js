@@ -154,7 +154,6 @@
 
             slider.noUiSlider.on('end', function() {
                 lastChangedField = $field.data('filter-key');
-                resetFollowingFields($field);
                 triggerIndexerUpdate();
                 // Auto-submit if AJAX is enabled
                 var form = $slider.closest('.esp-form');
@@ -427,7 +426,6 @@
     function initMetaFieldTriggers() {
         $(document).on('change', '.esp-meta-field select, .esp-meta-field input[type="checkbox"]', function() {
             lastChangedField = $(this).closest('.esp-meta-field').data('filter-key');
-            resetFollowingFields($(this).closest('.esp-field'));
             triggerIndexerUpdate();
         });
     }
