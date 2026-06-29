@@ -1,0 +1,43 @@
+services:
+  db:
+    image: mariadb:10.11
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  wordpress:
+    depends_on:
+      db:
+        condition: service_healthy
+    image: wordpress:6.7-php8.3
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_FS__DEV_MODE', true);
+        define('WP_FS__SKIP_EMAIL_ACTIVATION', true);
+        define('WP_FS__easy-search-filter_SECRET_KEY', 'sk_Mm0d;#b5YQBE%nw4C6};f^[a27sfi');
+        define('WP_SITEURL', 'http://localhost:8080');
+        define('WP_HOME', 'http://localhost:8080');
+    volumes:
+      - wp_data:/var/www/html
+      - ../../easy_search_plugin:/var/www/html/wp-content/plugins/easy-search-filter
+
+volumes:
+  db_data:
+  wp_data:
