@@ -167,8 +167,8 @@ class Query_Builder {
                     if (!empty($params[$param_chk])) {
                         $meta_query[] = [
                             'key'     => $key,
-                            'value'   => sanitize_text_field($params[$param_chk]),
                             'compare' => $compare,
+                            'value'   => '1',
                         ];
                     }
                     break;

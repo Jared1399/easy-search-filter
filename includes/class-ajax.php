@@ -133,9 +133,16 @@ class Ajax {
 
         foreach ($group->meta_fields as $field_config) {
             $key = $field_config['key'];
-            $val = sanitize_text_field($_POST['esp_meta_' . $key] ?? '');
-            if ($val) {
-                $active_filters['meta'][$key] = $val;
+            if ($field_config['type'] === 'checkbox') {
+                $chk = sanitize_text_field($_POST['esp_meta_' . $key . '_chk'] ?? '');
+                if ($chk) {
+                    $active_filters['meta'][$key] = '1';
+                }
+            } else {
+                $val = sanitize_text_field($_POST['esp_meta_' . $key] ?? '');
+                if ($val) {
+                    $active_filters['meta'][$key] = $val;
+                }
             }
         }
 
