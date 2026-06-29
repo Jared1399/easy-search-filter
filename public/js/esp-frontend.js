@@ -272,11 +272,12 @@
     // --- Sort ---
     function initSort() {
         $(document).on('change', '#esp-sort-select', function() {
-            var form = $('.esp-search-form');
-            var groupId = form.find('input[name="esp_group_id"]').val();
+            var formWrap = $('.esp-search-form');
+            var form = formWrap.find('.esp-form');
+            var groupId = formWrap.find('input[name="esp_group_id"]').val();
             var sortVal = $(this).val();
 
-            if (form.data('esp-ajax')) {
+            if (formWrap.data('esp-ajax')) {
                 var formData = form.serializeArray();
                 formData = formData.filter(function(item) { return item.name !== 'esp_orderby'; });
                 if (sortVal) formData.push({ name: 'esp_orderby', value: sortVal });
