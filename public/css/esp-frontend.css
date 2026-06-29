@@ -203,20 +203,123 @@
 }
 
 @media (max-width: 768px) {
-    .esp-results-grid {
-        grid-template-columns: 1fr;
+    .esp-form {
+        gap: 8px;
     }
 
     .esp-field {
         min-width: 100%;
+        flex: 1 1 100%;
+    }
+
+    .esp-field select,
+    .esp-field input[type="text"],
+    .esp-field input[type="number"],
+    .esp-field input[type="search"] {
+        font-size: 16px;
+        padding: 10px 12px;
+        height: 44px;
     }
 
     .esp-range-field {
         min-width: 100%;
+        padding-bottom: 8px;
+    }
+
+    .esp-range-slider {
+        margin: 24px 4px 18px;
+        height: 10px;
+    }
+
+    .esp-range-slider .noUi-handle {
+        width: 24px;
+        height: 24px;
+        right: -12px;
+        top: -9px;
+    }
+
+    .esp-range-values {
+        font-size: 14px;
     }
 
     .esp-form-actions {
         min-width: 100%;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .esp-search-btn,
+    .esp-clear-btn {
+        width: 100%;
+        text-align: center;
+        padding: 12px 20px;
+        font-size: 16px;
+        min-height: 44px;
+    }
+
+    .esp-results-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .esp-result-item {
+        border-radius: 6px;
+    }
+
+    .esp-result-thumb img {
+        height: 180px;
+    }
+
+    .esp-result-body {
+        padding: 12px;
+    }
+
+    .esp-result-title {
+        font-size: 15px;
+    }
+
+    .esp-results-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .esp-sort-control {
+        width: 100%;
+    }
+
+    .esp-sort-select {
+        flex: 1;
+        font-size: 16px;
+        padding: 8px;
+        height: 44px;
+    }
+
+    .esp-search-input {
+        font-size: 16px;
+        padding: 12px 14px 12px 38px;
+        height: 44px;
+    }
+
+    .esp-active-tags {
+        padding: 6px 10px;
+        gap: 4px;
+    }
+
+    .esp-tag {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+
+    .esp-pagination {
+        margin-top: 1.5rem;
+    }
+
+    .esp-pagination .page-numbers {
+        padding: 8px 14px;
+        font-size: 15px;
+        min-width: 40px;
+        text-align: center;
     }
 }
 
