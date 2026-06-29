@@ -177,31 +177,12 @@
             }
             if (!startResetting) return;
 
-            // Reset taxonomy fields: clear hidden inputs and cascade selects
+            // Only reset taxonomy cascade fields — NOT meta fields
             $(this).find('input.esp-tax-input').val('');
             $(this).find('select.esp-cascade-level').each(function() {
                 $(this).prop('selectedIndex', 0);
             });
             $(this).find('.esp-cascade-children').empty();
-
-            // Reset meta fields
-            $(this).find('select:not(.esp-cascade-level)').each(function() {
-                $(this).prop('selectedIndex', 0);
-            });
-            $(this).find('input[type="number"]').val('');
-            $(this).find('input[type="text"]').val('');
-            $(this).find('input[type="checkbox"]').prop('checked', false);
-
-            // Reset range sliders to full range
-            $(this).find('.esp-range-slider').each(function() {
-                if (this.noUiSlider) {
-                    this.noUiSlider.set([$(this).data('min'), $(this).data('max')]);
-                    $(this).closest('.esp-range-field').find('input[name*="_min"]').val($(this).data('min'));
-                    $(this).closest('.esp-range-field').find('input[name*="_max"]').val($(this).data('max'));
-                    $(this).closest('.esp-range-field').find('.esp-range-val-min').text($(this).data('min'));
-                    $(this).closest('.esp-range-field').find('.esp-range-val-max').text($(this).data('max'));
-                }
-            });
         });
     }
 
