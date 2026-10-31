@@ -75,7 +75,7 @@ Yes. AJAX-based filtering bypasses page cache, and the plugin is compatible with
 2. Term tree — manage terms with the collapsible tree view, showing parent-child relationships.
 3. Filter group editor — combine taxonomies and meta fields into a search form.
 4. Frontend form — cascading dropdowns, range slider, and search input.
-5. Results grid — filtered results with pagination.
+5. Filtered results — the grid updates to the matching properties.
 
 == Changelog ==
 
