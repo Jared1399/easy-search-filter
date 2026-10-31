@@ -1,11 +1,10 @@
 <?php
 /**
  * Plugin Name:     Easy Search & Filter
- * Plugin URI:      https://easysearchfilter.com
  * Description:     Universal hierarchical search and filter system for WordPress. Create dynamic taxonomies, cascading dropdowns, and custom meta field filters — no code required.
  * Version:         1.0.0
  * Author:          Jared Quiero
- * Author URI:      https://yourwebsite.com
+ * Author URI:      https://github.com/Jared1399
  * License:         GPL v2 or later
  * License URI:     https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:     easy-search-filter

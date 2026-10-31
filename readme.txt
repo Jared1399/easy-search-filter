@@ -21,13 +21,11 @@ Easy Search & Filter lets you build advanced search forms with hierarchical drop
 * **Custom Meta Field Filters** — Add filters for any post meta: dropdown selects, number inputs, text inputs, range sliders, and checkboxes.
 * **Auto-Detect Options** — Scan existing content to automatically populate select field options.
 * **Any Post Type** — Works with posts, pages, WooCommerce products, and any custom post type.
-* **Full AJAX Search** — Filter results without page reloads (Pro version).
-* **Live Result Counts** — Show real-time counts next to each filter option via the built-in indexer (Pro version).
-* **Sorting** — Sort results by date, title, or custom meta fields (Pro version).
 * **Text Search** — Full-text search that combines with all other filters.
+* **Active Tags** — Show the filters currently applied, each removable individually.
 * **WooCommerce Compatible** — Works seamlessly when WooCommerce is active, but does not require it.
-* **Gutenberg Blocks** — Insert filter forms and results using Gutenberg blocks (Pro version).
 * **Template Overrides** — Copy templates to your theme's `/esp/` directory to customize the output.
+* **Shortcode and Block** — Drop the search form into any page with `[esp_search id="1"]`.
 
 = Use Cases =
 
@@ -49,15 +47,15 @@ Easy Search & Filter lets you build advanced search forms with hierarchical drop
 
 = Does it work with WooCommerce? =
 
-Yes. Easy Search & Filter fully supports WooCommerce products as a post type target. The Pro version includes price sorting and range filtering compatible with WooCommerce's `_price` meta field. WooCommerce is optional — the plugin works with any post type.
+Yes. Easy Search & Filter supports WooCommerce products as a post type target, and WooCommerce is entirely optional — the plugin works with any post type.
 
 = Can I use existing taxonomies? =
 
-Currently, the plugin lets you create new taxonomies from the admin. You select which taxonomies to use in each filter group. Support for attaching to existing WordPress taxonomies (like WooCommerce product categories) is planned.
+The plugin lets you create new taxonomies from the admin panel, and you select which taxonomies to use in each filter group.
 
 = Does it work with page builders like Elementor? =
 
-Shortcodes work in any page builder that supports WordPress shortcodes. Gutenberg blocks are included in the Pro version.
+Yes. The search form is inserted with a shortcode, which works in any page builder that supports WordPress shortcodes.
 
 = Is it multilingual? =
 
@@ -69,7 +67,7 @@ Yes. Copy the template files from `/templates/` to your theme's `/esp/` director
 
 = Does it work with caching plugins? =
 
-Yes. AJAX-based filtering bypasses page cache. The indexer uses a custom database table for fast counting, compatible with most caching setups.
+Yes. AJAX-based filtering bypasses page cache, and the plugin is compatible with most caching setups.
 
 == Screenshots ==
 
@@ -77,7 +75,7 @@ Yes. AJAX-based filtering bypasses page cache. The indexer uses a custom databas
 2. Term tree — manage terms with the collapsible tree view, showing parent-child relationships.
 3. Filter group editor — combine taxonomies and meta fields into a search form.
 4. Frontend form — cascading dropdowns, range slider, and search input.
-5. Results grid — filtered results with sorting and pagination.
+5. Results grid — filtered results with pagination.
 
 == Changelog ==
 
@@ -90,12 +88,12 @@ Yes. AJAX-based filtering bypasses page cache. The indexer uses a custom databas
 * Filter Group editor (combine taxonomies + meta fields)
 * Template override system (theme/esp/)
 * WooCommerce compatibility
-* Gutenberg blocks (Pro)
-* AJAX search with skeleton loading (Pro)
-* Indexer with custom database table and post hooks (Pro)
-* Dynamic sorting by date, title, and meta values (Pro)
 * Active tags with individual filter removal
 * Range slider (noUiSlider)
 * Text search with debounced AJAX
 * hide_zero_count with DOM-order-aware logic
 * Responsive mobile layout
+
+== Credits ==
+
+* [noUiSlider](https://refreshless.com/nouislider/) — MIT License, bundled for range slider inputs.
